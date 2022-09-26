@@ -29,7 +29,8 @@ function App() {
   };
   const handleDeleteEvent = (e, id) => {
     e.preventDefault();
-    setEvents(events.filter((event) => event.id !== id));
+    // using previous value state
+    setEvents((prev) => prev.filter((event) => event.id !== id));
   };
   const handleEditEvent = (e, id) => {
     e.preventDefault();
