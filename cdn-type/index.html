@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="CDN Type">
+        <meta name="author" content="">
+
+        <title>CDN Type</title>
+ <!--- React CDN--> 
+ <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+ <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+   <!-- babel-->
+   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>    </head>
+    <body>
+        <h1>CDN USE</h1>
+        <div id="banner"></div>
+
+        <script type="text/babel">
+            const Banner = () => {
+                const title = "Hello World";
+                const subtitle = "This is a subtitle";
+                const address = "1234 Main St";
+                return (
+                    <div>
+                        <h1>React Banner</h1>
+                        <h2>{title}</h2>
+                        <h3>{subtitle}</h3>
+                        <p>{address}</p>
+                    </div>
+                )
+            }
+            ReactDOM.render(<Banner/>, document.getElementById('banner'))
+        </script>
+    </body>
+</html>
