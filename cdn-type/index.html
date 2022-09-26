@@ -23,16 +23,22 @@
                 const title = "Hello World";
                 const subtitle = "This is a subtitle";
                 const address = "1234 Main St";
+                const handleClick = (e) => {
+                    e.preventDefault();
+                    console.log("event object",e);
+                }
                 return (
                     <div>
                         <h1>React Banner</h1>
                         <h2>{title}</h2>
                         <h3>{subtitle}</h3>
-                        <p>{address}</p>
+                        <p onClick={handleClick}>{address}</p>
+                        <p onClick={(e) => { e.preventDefault(); console.log("hello");}}>Inline arrow functions</p>
                     </div>
                 )
             }
-            ReactDOM.render(<Banner/>, document.getElementById('banner'))
+           const root = ReactDOM.createRoot( document.getElementById('banner'))
+              root.render(<Banner/>)
         </script>
     </body>
 </html>
