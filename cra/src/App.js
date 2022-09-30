@@ -1,11 +1,16 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Formik } from 'formik';
-
+import { LineWave } from 'react-loader-spinner';
+import Title from './components/title';
 import * as Yup from 'yup';
+import { Modal } from './components/modal';
+import NewEventForm from './components/NewEventForm';
 
 function App() {
   const [name, setName] = useState('Mario');
+  const [showModal, setShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [events, setEvents] = useState([
     { id: 1, title: 'Event 1', date: '2021-01-01' },
     { id: 2, title: 'Event 2', date: '2021-01-02' },
@@ -18,6 +23,7 @@ function App() {
   };
   const handleNewEvent = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const id = events.length + 1;
     const today = new Date();
     const newEvent = {
@@ -26,6 +32,21 @@ function App() {
       date: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
     };
     setEvents([...events, newEvent]);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  };
+  useEffect(() => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
+
+  const addEvent = (event) => {
+    setEvents((prevEvents) => {
+      return [...prevEvents, event];
+    });
   };
   const handleDeleteEvent = (e, id) => {
     e.preventDefault();
@@ -38,11 +59,20 @@ function App() {
     setEvents(events.map((event) => (event.id === id ? { ...event, title: 'Edited' } : event)));
     console.log(event);
   };
-  return (
+
+  const handleCloseModal = (e) => {
+    e.preventDefault();
+    setShowModal(false);
+  };
+
+  return isLoading ? (
+    <LineWave />
+  ) : (
     <div className="App">
+      <Title />
       {name}
       <button onClick={handleClick}>Change name</button>
-      {events.map((event) => (
+      {events.sort().map((event) => (
         <div key={event.id}>
           <h1>{event.title}</h1>
           <p>{event.date}</p>
@@ -57,7 +87,7 @@ function App() {
           title: Yup.string().required('Required'),
           date: Yup.date().required('Required')
         })}>
-        {({ values, handleChange, handleSubmit }) => (
+        {({ values, handleChange }) => (
           <form onSubmit={handleNewEvent}>
             <input type="text" name="title" value={values.title} onChange={handleChange} />
             <input type="text" name="date" value={values.date} onChange={handleChange} />
@@ -65,6 +95,12 @@ function App() {
           </form>
         )}
       </Formik>
+      <button onClick={() => setShowModal(true)}>Show modal</button>
+      {showModal && (
+        <Modal setShow={handleCloseModal}>
+          <NewEventForm addEvents={addEvent} />
+        </Modal>
+      )}
     </div>
   );
 }

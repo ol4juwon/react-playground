@@ -27,7 +27,26 @@
 .App-link {
   color: #61dafb;
 }
-
+.title{
+  display: inline-block;
+  padding: 30px 60px;
+  background: #f4f4f4;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.title:hover{
+  background: #e4e4e4;
+}
+.subtitle{
+  display: inline-block;
+  padding-bottom: 20px;
+  color: #555;
+  border-bottom: 1px solid #f4f4f4;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-weight: normal;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
