@@ -1,9 +1,7 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
-import { Formik } from 'formik';
 import { LineWave } from 'react-loader-spinner';
 import Title from './components/title';
-import * as Yup from 'yup';
 import { Modal } from './components/modal';
 import NewEventForm from './components/NewEventForm';
 
@@ -15,21 +13,6 @@ function App() {
   const handleClick = (e) => {
     e.preventDefault();
     setName('Luigi');
-  };
-  const handleNewEvent = (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    const id = events.length + 1;
-    const today = new Date();
-    const newEvent = {
-      id,
-      title: `Event ${id}`,
-      date: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
-    };
-    setEvents([...events, newEvent]);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
   };
   useEffect(() => {
     setIsLoading(true);

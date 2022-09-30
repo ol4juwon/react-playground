@@ -4,10 +4,6 @@ export default function NewEventForm({ addEvents }) {
   const title = useRef();
   const date = useRef();
   const [location, setLocation] = useState('Manchester');
-  const handleChange = (e) => {
-    console.log(e.target.value);
-    title.current.value = e.target.value;
-  };
   const resetForm = () => {
     title.current.value = '';
     date.current.value = '';
