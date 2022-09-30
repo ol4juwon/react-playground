@@ -11,12 +11,7 @@ function App() {
   const [name, setName] = useState('Mario');
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [events, setEvents] = useState([
-    { id: 1, title: 'Event 1', date: '2021-01-01' },
-    { id: 2, title: 'Event 2', date: '2021-01-02' },
-    { id: 3, title: 'Event 3', date: '2021-01-03' },
-    { id: 4, title: 'Event 4', date: '2021-01-04' }
-  ]);
+  const [events, setEvents] = useState([]);
   const handleClick = (e) => {
     e.preventDefault();
     setName('Luigi');
@@ -44,6 +39,7 @@ function App() {
   }, []);
 
   const addEvent = (event) => {
+    console.log(event);
     setEvents((prevEvents) => {
       return [...prevEvents, event];
     });
@@ -73,28 +69,15 @@ function App() {
       {name}
       <button onClick={handleClick}>Change name</button>
       {events.sort().map((event) => (
-        <div key={event.id}>
+        <div key={event.id} className="card">
           <h1>{event.title}</h1>
-          <p>{event.date}</p>
+          <p>
+            {event?.location}-{event.date}
+          </p>
           <button onClick={(e) => handleDeleteEvent(e, event.id)}>Delete</button>
           <button onClick={(e) => handleEditEvent(e, event.id)}>Edit</button>
         </div>
       ))}
-      <Formik
-        initialValues={{ title: '', date: '' }}
-        onSubmit={handleNewEvent}
-        validationSchema={Yup.object({
-          title: Yup.string().required('Required'),
-          date: Yup.date().required('Required')
-        })}>
-        {({ values, handleChange }) => (
-          <form onSubmit={handleNewEvent}>
-            <input type="text" name="title" value={values.title} onChange={handleChange} />
-            <input type="text" name="date" value={values.date} onChange={handleChange} />
-            <button type="submit">Add new event</button>
-          </form>
-        )}
-      </Formik>
       <button onClick={() => setShowModal(true)}>Show modal</button>
       {showModal && (
         <Modal setShow={handleCloseModal}>
