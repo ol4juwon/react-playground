@@ -5,6 +5,7 @@ function App() {
   return (
     <div className="App">
       <TripList />
+      <p onClick={(e) => console.log("hello", e)}>Hello</p>
     </div>
   );
 }

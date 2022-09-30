@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import "./Triplist.css";
-export default function TripList() {
+const TripList = () => {
   const [trips, setTrips] = useState([]);
   const [url, setUrl] = useState("http://localhost:3000/trips");
-
-  useEffect(() => {
-    // if (trips.length === 0) {
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => setTrips(data));
-    // }
-    setTimeout(() => {
-      console.log(trips);
-    }, 1000);
+  const fecthTrips = useCallback(async () => {
+    const response = await fetch(url);
+    const data = await response.json();
+    setTrips(data);
   }, [url]);
+  useEffect(() => {
+    fecthTrips();
+  }, [fecthTrips]);
+  console.log(trips);
+
   return (
     <div className="trip-list">
       <h1>Trip List</h1>
@@ -37,4 +36,6 @@ export default function TripList() {
       </div>
     </div>
   );
-}
+};
+
+export default TripList;
