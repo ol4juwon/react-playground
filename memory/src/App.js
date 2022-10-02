@@ -14,15 +14,12 @@ function App() {
   const [turns, setTurns] = React.useState(0);
   const [choiceOne, setChoiceOne] = React.useState(null);
   const [choiceTwo, setChoiceTwo] = React.useState(null);
-  //   const shuffle = () => {
-  //     let cards = document.querySelectorAll('.card');
-  //     cards.forEach((card) => {
-  //       let randomPos = Math.floor(Math.random() * 12);
-  //       card.style.order = randomPos;
-  //     });
-  //   };
+  const [difficulty, setDifficulty] = React.useState(2);
+
   const shuffleCards = () => {
-    const shuffledCard = [...cardImg, ...cardImg, ...cardImg, ...cardImg]
+    const shuffledCard = Array(difficulty)
+      .fill(cardImg)
+      .flat()
       .sort(() => Math.random() - 0.5)
       .map((card) => ({ ...card, id: Math.random() }));
     setCards(shuffledCard);
@@ -38,6 +35,10 @@ function App() {
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
   useEffect(() => {
+    shuffleCards();
+  }, [difficulty]);
+
+  useEffect(() => {
     if (choiceOne !== null && choiceTwo !== null) {
       if (choiceOne?.src === choiceTwo?.src) {
         setCards((prevCards) => {
@@ -50,26 +51,38 @@ function App() {
           });
         });
       } else if (choiceOne?.src !== choiceTwo?.src) {
-        choiceOne.flipped = false;
-        setTimeout(() => {
-          choiceTwo.flipped = false;
-        }, 1000);
         console.log('not matched');
       }
-      resetCard();
+      setTimeout(() => {
+        resetCard();
+      }, 1000);
     }
   }, [choiceOne, choiceTwo]);
   return (
     <div className="App">
       <h1>Magic Memory - {turns}</h1>
-      <button onClick={shuffleCards}>New Game</button>
+      <div className="start">
+        <button onClick={shuffleCards}>New Game</button>{' '}
+        <select onChange={(e) => setDifficulty(parseInt(e.target.value))}>
+          <option value="2" className="green">
+            Easy
+          </option>
+          <option value="4" className="yellow">
+            Medium
+          </option>
+          <option value="8" className="red">
+            Hard
+          </option>
+        </select>
+      </div>
       <div className="deck">
         {cards.map((card, index) => {
           return (
             <SingleCard
               card={card}
               key={index}
-              handleChoice={card.flipped ? () => null : handleChoice}
+              handleChoice={handleChoice}
+              flipped={card === choiceOne || card === choiceTwo || card.matched}
             />
           );
         })}
