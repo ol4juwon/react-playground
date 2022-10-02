@@ -2,12 +2,12 @@ import './App.css';
 import React, { useEffect } from 'react';
 import SingleCard from './components/SingleCard';
 const cardImg = [
-  { src: 'img/helmet-1.png', matched: false, flipped: false },
-  { src: 'img/sword-1.png', matched: false, flipped: false },
-  { src: 'img/ring-1.png', matched: false, flipped: false },
-  { src: 'img/scroll-1.png', matched: false, flipped: false },
-  { src: 'img/shield-1.png', matched: false, flipped: false },
-  { src: 'img/potion-1.png', matched: false, flipped: false }
+  { src: 'img/helmet-1.png', matched: false },
+  { src: 'img/sword-1.png', matched: false },
+  { src: 'img/ring-1.png', matched: false },
+  { src: 'img/scroll-1.png', matched: false },
+  { src: 'img/shield-1.png', matched: false },
+  { src: 'img/potion-1.png', matched: false }
 ];
 function App() {
   const [cards, setCards] = React.useState([]);
@@ -31,7 +31,6 @@ function App() {
     setTurns((prevTurn) => prevTurn + 1);
   };
   const handleChoice = async (card) => {
-    card.flipped = true;
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
   useEffect(() => {
@@ -43,7 +42,7 @@ function App() {
       if (choiceOne?.src === choiceTwo?.src) {
         setCards((prevCards) => {
           return prevCards.map((card) => {
-            if (card.id === choiceOne?.id) {
+            if (card.src === choiceOne?.src) {
               return { ...card, matched: true };
             } else {
               return card;
