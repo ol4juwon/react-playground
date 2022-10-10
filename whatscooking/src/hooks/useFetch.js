@@ -17,6 +17,7 @@ export const useFetch = (url) => {
       const jsonData = await response.json();
       setData(jsonData);
       setTimeout(() => {
+        setError(null);
         setIsLoading(false);
       }, 2000);
     }catch(err){
@@ -29,7 +30,8 @@ export const useFetch = (url) => {
     }
     };
     fetchData();
+    return () => controller.abort();
   }, [url]);
 
-  return { data, isLoading };
+  return { data, isLoading, error };
 };
