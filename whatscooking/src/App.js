@@ -16,7 +16,7 @@ function App() {
             <Route state={true} path="/" element={<Home />} />
             <Route path="/create" element={<Create />} />
             <Route path="/recipe/:id" element={<Recipe />} />
-            <Route path="/search?q=:search" element={<Search/>} />
+            <Route path="/search" element={<Search/>} />
           </Routes>
       </Router>
     </div>
