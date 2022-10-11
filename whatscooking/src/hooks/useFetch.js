@@ -24,17 +24,17 @@ export const useFetch = (url, method ='GET') => {
     const fetchData = async (fetchOptions) => {
       setIsLoading(true);
       try{
-        if(options){
+
       const response = await fetch(url,{...fetchOptions, signal: controller.signal});
       if (!response.ok) {
         throw Error(response.statusText);
       }
       const jsonData = await response.json();
       setData(jsonData);
-      setTimeout(() => {
+      // setTimeout(() => {
         setError(null);
         setIsLoading(false);
-      }, 2000);}
+      // }, 2000);
     }catch(err){
       console.log(err);
       if(err.name === 'AbortError'){
@@ -46,11 +46,13 @@ export const useFetch = (url, method ='GET') => {
     }
     };
     if(method === 'GET'){
+      console.log('getting')
     fetchData();}
 
     if(method === 'POST' && options){
-      console.log(method, "firing")
-    fetchData(options);
+      console.log(method, "firing") 
+      
+      fetchData(options);
   }
 
     return () => controller.abort();

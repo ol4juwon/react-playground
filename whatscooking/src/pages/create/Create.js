@@ -12,11 +12,13 @@ const Create = () => {
   const [newIngredient, setNewIngredient] = useState('')
   const [method, setMethod] = useState('')
   const [count, setCount] = useState(0)
-  const {postData, data} = useFetch('http://localhost:3000/recipes','POST')
   const ingredientInput = useRef();
+  const {postData, data} = useFetch('http://localhost:3000/recipes','POST')
+
   const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(title, cookingTime, ingredients, method)
+
+    // e.preventDefault();
+    // console.log(title, cookingTime, ingredients, method)
     postData({title, cookingTime: cookingTime + ' minutes', ingredients, method});
   }
 
