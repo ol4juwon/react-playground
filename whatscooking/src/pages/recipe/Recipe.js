@@ -6,19 +6,32 @@ import './Recipe.css'
 const Recipe = () => {
   const params = useParams();
   console.log("params",params);
-  const {data, isLoading, error} = useFetch(`http://localhost:3000/recipes/${params.id}`)
+  const {data: recipe, isLoading, error} = useFetch(`http://localhost:3000/recipes/${params.id}`)
   return (
-    <>
-     <div>
+    <div className='recipe'>
+     {/* <div>
       <Cook width="200px" height="100px" style={{padding: '20px', justifyContent: 'center'}}/>
-      </div>
+      </div> */}
+      {error && <p className='error'>{error}</p>}
     {isLoading && <div className='loading'>Loading...</div>}
-    {data && <div className=''>
-     
-      <h2 className='page-title'>{!isLoading && data && data.title}</h2>
-
-    </div>}
-    </>
+    {
+      !isLoading && !error && recipe && (
+        <>
+          <h2>{recipe.title}</h2>
+          <p>Prep Time: {recipe.cookingTime}</p>
+          <ul>
+            {recipe.ingredients.map(
+              (ingredient, index) => <li key={index}>{ingredient}</li>
+            )}
+          </ul>
+          <h3>Method</h3>
+          <p className='method'>
+            {recipe.method}</p>
+          </>
+      )
+        
+    }
+    </div>
   )
 }
 
